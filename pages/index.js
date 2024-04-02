@@ -1,17 +1,20 @@
-import Head from 'next/head';
-import styles from '../styles/Home.module.css';
-import React, { useState } from 'react';
-
+import Head from "next/head";
+import styles from "../styles/Home.module.css";
+import React, { useState } from "react";
 
 export default function Home() {
-
-  const [inputText, setInputText] = useState('');
+  const [inputText, setInputText] = useState("");
+  const [outputText, setOutputText] = useState("");
 
   const handleInputChange = (e) => {
     setInputText(e.target.value);
   };
 
-
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setOutputText(inputText);
+    setInputText("");
+  };
 
   return (
     <div className={styles.container}>
@@ -22,25 +25,22 @@ export default function Home() {
 
       <main>
         <h1 className={styles.title}>
-          The happiest person in the world is <a>{inputText}</a>
+          The happiest person in the world is <a>{outputText}</a>
         </h1>
 
-        <p>
-          Type your answer below
-        </p>
-        <input
-          type="text"
-          value={inputText}
-          onChange={handleInputChange}
-          placeholder="Enter text..."
-        />
-
-        <div className={styles.grid}>
-        
-        </div>
+        <p>Type your answer below</p>
+        <form onSubmit={handleSubmit}>
+          <input
+            type="text"
+            value={inputText}
+            onChange={handleInputChange}
+            placeholder="Enter text..."
+          />
+          <button type="submit">Submit</button>
+        </form>
+        <div className={styles.grid}></div>
       </main>
 
-     
       <style jsx>{`
         main {
           padding: 5rem 0;
@@ -82,6 +82,20 @@ export default function Home() {
           outline: none;
           border-color: #007bff; /* Change border color on focus */
         }
+
+        button {
+          padding: 0.5rem 1rem;
+          border: 0px;
+          border-radius: 4px;
+          background-color: black;
+          color: #fff;
+          cursor: pointer;
+          display: block;
+          margin:auto;
+          
+        }
+      
+        }
       `}</style>
 
       <style jsx global>{`
@@ -89,17 +103,8 @@ export default function Home() {
         body {
           padding: 0;
           margin: 0;
-          font-family:
-            -apple-system,
-            BlinkMacSystemFont,
-            Segoe UI,
-            Roboto,
-            Oxygen,
-            Ubuntu,
-            Cantarell,
-            Fira Sans,
-            Droid Sans,
-            Helvetica Neue,
+          font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
+            Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue,
             sans-serif;
         }
         * {
